@@ -14,7 +14,6 @@ class FitnessCenterManager {
     val members = mutableListOf<Member>()
 
     fun registerMember(name:String, membershipType: String){
-<<<<<<< HEAD
         val membershipType = when (membershipType.toLowerCase()) {
             "basic" -> MembershipType.Basic
             "premium" -> MembershipType.Premium
@@ -26,9 +25,6 @@ class FitnessCenterManager {
                 return
             }
         }
-=======
->>>>>>> b3d0df1cb2222a2321b99e3eda9bdcadb41463a5
-
         val newMember = Member(
             id = members.size + 1,
             name = name,
@@ -133,7 +129,7 @@ class FitnessCenterManager {
     }
 
     fun classAttendanceTracking(memberId: Int){
-
+        
     }
 
     fun membershipRenewal(memberId: Int){

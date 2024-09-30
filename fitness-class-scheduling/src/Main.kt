@@ -53,7 +53,10 @@ fun main() {
                     println("Class Max Participants: ")
                     val maxParticipants:Int = scanner.nextInt()
 
-                    fcm.scheduleFitnessClasses(name, instructor, date, time, duration, maxParticipants)
+                    println("Class Type [ Regular | Special | Exclusive]: ")
+                    val classType:String = scanner.nextLine()
+
+                    fcm.scheduleFitnessClasses(name, instructor, date, time, duration, maxParticipants, classType)
                 }
                 3 -> {
                     println("Member ID: ")
