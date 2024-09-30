@@ -1,3 +1,4 @@
+import services.FitnessCenterManager
 import java.util.*
 
 fun menus(){
@@ -15,7 +16,6 @@ fun menus(){
 fun main() {
 
     val fcm = FitnessCenterManager()
-    fcm.Init()
     val scanner = Scanner(System.`in`)
     var selectedMenu = 0
 
