@@ -10,7 +10,7 @@ class FitnessCenterManager {
     val fitnessClasss = mutableListOf<FitnessClass>()
     val members = mutableListOf<Member>()
 
-    fun registerMember(name:String, membershipType: String, subscriptionStartDate:String){
+    fun registerMember(name:String, membershipType: String){
 
     }
 

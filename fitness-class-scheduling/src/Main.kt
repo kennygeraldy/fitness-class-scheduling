@@ -1,3 +1,4 @@
+import services.FitnessCenterManager
 import java.util.*
 
 fun menus(){
@@ -15,7 +16,6 @@ fun menus(){
 fun main() {
 
     val fcm = FitnessCenterManager()
-    fcm.Init()
     val scanner = Scanner(System.`in`)
     var selectedMenu = 0
 
@@ -27,25 +27,44 @@ fun main() {
             println("Member Name: ")
             val name: String = scanner.nextLine()
 
-            if (name.isEmpty()) {
-                println("Member name must not be empty.")
-                continue
-            }
-
-            println("Choose your membership Tiers [Basic, Premium, VIP] ")
+            println("Choose your membership Tiers [Basic, Premium, VIP]: ")
             val membershipType: String = scanner.nextLine()
 
-            if (membershipType.isEmpty()) {
-                println("Membership tiers  must not be empty.")
-                continue
-            }
-            fcm.registerMember()
+            fcm.registerMember(name, membershipType)
         }
         if (selectedMenu == 2){
-            fcm.scheduleFitnessClasses()
+            println("Class Name: ")
+            val name: String = scanner.nextLine()
+
+            println("Class Instructor: ")
+            val instructor: String = scanner.nextLine()
+
+            println("Class Date: ")
+            val date: String = scanner.nextLine()
+
+            println("Class Date: ")
+            val time:String = scanner.nextLine()
+
+            println("Class Duration: ")
+            val duration:Int = scanner.nextInt()
+
+            println("Class Max Participants: ")
+            val maxParticipants:Int = scanner.nextInt()
+
+            fcm.scheduleFitnessClasses(name, instructor, date, time, duration, maxParticipants)
         }
         if (selectedMenu == 3){
-            fcm.enrollInClass()
+            println("Member ID: ")
+            val memberId: Int = scanner.nextInt()
+
+            val fitnessClassId = arrayListOf<Int>()
+            do {
+                for (x in fcm.fitnessClasss){
+                    println("ID: ${x.id} Name:${x.name}")
+                }
+                println("Fitness Class ID: ")
+            }
+            fcm.enrollInClass(memberId, fitnessClassId)
         }
         if (selectedMenu == 4){
             fcm.classAttendanceTracking()
