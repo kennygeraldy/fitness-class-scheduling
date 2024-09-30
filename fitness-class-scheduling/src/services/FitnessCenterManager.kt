@@ -20,9 +20,9 @@ class FitnessCenterManager {
             "premium" -> MembershipType.Premium
             "vip" -> MembershipType.VIP
             else -> {
-                println("===============================================================================================")
-                println("Please input a valid membership tiers [Basic, Premium, and VIP]")
-                println("===============================================================================================")
+                println("===================================================================")
+                println("❌ Please input a valid membership tier [Basic, Premium, or VIP].")
+                println("===================================================================")
                 return
             }
         }
@@ -34,9 +34,11 @@ class FitnessCenterManager {
             subscriptionEndDate = LocalDate.now().plusMonths(1)
         )
             members.add(newMember)
-            println("================================================================")
-            println("'${newMember.name}' has been sucessfully registered as a member with ID: ${newMember.id}.")
-            println("================================================================")
+        println("================================================================")
+        println(" ✅ Member Registered: ${newMember.name}")
+        println(" 🔑 Membership ID: ${newMember.id}")
+        println(" 📅 Subscription valid until: ${newMember.subscriptionEndDate}")
+        println("================================================================")
     }
 
     fun scheduleFitnessClasses(name:String, instructor:String, inputtedDate:String, inputtedTime:String, duration:Int, maxParticipants:Int, inputtedClassType: String){
@@ -58,13 +60,17 @@ class FitnessCenterManager {
                 val newFitnessClass = FitnessClass(fitnessClasses.size+1, name, instructor, date, time, duration, maxParticipants, mutableListOf(), classType)
                 fitnessClasses.add(newFitnessClass)
                 println("==============================================================")
-                println("'${newFitnessClass.name}' Class  has been created with ID: ${newFitnessClass.id}.")
+                println(" ✅ Class Scheduled: ${newFitnessClass.name}")
+                println(" 🔑 Class ID: ${newFitnessClass.id}")
+                println(" 🏋️ Instructor: ${newFitnessClass.instructor}")
+                println(" 📅 Date: ${newFitnessClass.date} | 🕒 Time: ${newFitnessClass.time}")
+                println(" ⏳ Duration: ${newFitnessClass.duration} mins | 👥 Max Participants: ${newFitnessClass.maxParticipants}")
                 println("==============================================================")
             } else {
                 throw IllegalArgumentException("Invalid class type: $inputtedClassType. Must be one of ${ClassType.values().joinToString()}.")
             }
         } else {
-            println("Class cannot be scheduled because it overlaps with an existing class.")
+            println("⚠️ Class cannot be scheduled because it overlaps with an existing class.")
         }
     }
 
@@ -73,7 +79,7 @@ class FitnessCenterManager {
 
         if (member == null) {
             println("================================================================")
-            println("Member with ID $memberId not found.")
+            println("❌ Member with ID $memberId not found.")
             println("================================================================")
             return
         }
@@ -84,7 +90,7 @@ class FitnessCenterManager {
 
             if (fitnessClass == null) {
                 println("================================================================")
-                println("Class with ID $classId not found.")
+                println("❌ Class with ID $classId not found.")
                 println("================================================================")
                 return
             }
@@ -98,15 +104,15 @@ class FitnessCenterManager {
                             fitnessClass.enrolledMembers.add(member)
                             markAttendance(memberId, classId)
                             println("================================================================")
-                            println("Enrolled in regular class: $classId")
+                            println("✅ Enrolled in regular class: $classId")
                             println("================================================================")
                         } else {
-                            println("Cannot enroll in class $classId. This class is already full.")
+                            println("⚠️ Class ${classId} is full. Cannot enroll.")
                         }
                     } else {
-                        println("================================================================")
-                        println("Cannot enroll in class $classId. Basic members can only access regular classes.")
-                        println("================================================================")
+                        println("========================================================================================")
+                        println("❌ Basic members can only access Regular classes. Class ID $classId is not available.")
+                        println("========================================================================================")
                     }
                 }
                 MembershipType.Premium -> {
@@ -115,15 +121,15 @@ class FitnessCenterManager {
                             fitnessClass.enrolledMembers.add(member)
                             markAttendance(memberId, classId)
                             println("================================================================")
-                            println("Enrolled in class: $classId")
+                            println("✅ Enrolled in premium class: $classId")
                             println("================================================================")
                         } else {
-                            println("Cannot enroll in class $classId. This class is already full.")
+                            println("⚠️ Class ${classId} is full. Cannot enroll.")
                         }
                     } else {
-                        println("================================================================")
-                        println("Cannot enroll in class $classId. Premium members can only access regular and special classes.")
-                        println("================================================================")
+                        println("======================================================================================================")
+                        println("❌ Premium members can only access Regular and Special classes. Class ID $classId is not available.")
+                        println("======================================================================================================")
                     }
                 }
                 MembershipType.VIP -> {
@@ -131,10 +137,10 @@ class FitnessCenterManager {
                         fitnessClass.enrolledMembers.add(member)
                         markAttendance(memberId, classId)
                         println("================================================================")
-                        println("Enrolled in class: $classId")
+                        println("✅ Enrolled in exclusive class: $classId")
                         println("================================================================")
                     } else {
-                        println("Cannot enroll in class $classId. This class is already full.")
+                        println("⚠️ Class ${classId} is full. Cannot enroll.")
                     }
                 }
             }
@@ -146,19 +152,23 @@ class FitnessCenterManager {
         if (member != null) {
             if (member.attendedClasses.isNotEmpty()) {
                 println("================================================================")
-                println("Classes attended by ${member.name}:")
+                println("📅 Classes attended by ${member.name}:")
                 println("================================================================")
                 for (x in member.attendedClasses) {
-                    println("ID: ${x.id} Name: ${x.name} Instructor: ${x.instructor} Date: ${x.date} Time: ${x.time} Duration: ${x.duration} Enrolled Members: ${x.enrolledMembers.size} Max Participants: ${x.maxParticipants} Class Type: ${x.classType}")
+                    println("📍 ID: ${x.id} | Name: ${x.name} | Instructor: ${x.instructor}")
+                    println(" 📅 Date: ${x.date} | 🕒 Time: ${x.time} | ⏳ Duration: ${x.duration} mins")
+                    println(" Enrolled Members: ${x.enrolledMembers.size} | Max Participants: ${x.maxParticipants}")
+                    println(" Class Type: ${x.classType}")
+                    println("================================================================")
                 }
             } else {
                 println("================================================================")
-                println("${member.name} has not attended any classes.")
+                println("⚠️ ${member.name} has not attended any classes.")
                 println("================================================================")
             }
         } else {
             println("================================================================")
-            println("Member with ID $memberId not found.")
+            println("❌ Member with ID $memberId not found.")
             println("================================================================")
         }
     }
@@ -170,19 +180,19 @@ class FitnessCenterManager {
             val daysRemaining = ChronoUnit.DAYS.between(today, member.subscriptionEndDate)
 
             if (daysRemaining <= 5) {
-                println("================================================================")
-                println("Warning: Member ${member.name}'s subscription ends in $daysRemaining day(s).")
-                println("================================================================")
+                println("==================================================================================")
+                println("⚠️ Warning: Member '${member.name}' subscription ends in $daysRemaining day(s).")
+                println("==================================================================================")
             }
 
             member.subscriptionEndDate = member.subscriptionEndDate.plusDays(30)
-            println("================================================================")
-            println("Member ${member.name}'s subscription has been extended by 30 days.")
-            println("New subscription end date: ${member.subscriptionEndDate}")
-            println("================================================================")
+            println("==================================================================================")
+            println("✅ Subscription Extended: Member '${member.name}' has been extended by 30 days.")
+            println("📅 New subscription end date: ${member.subscriptionEndDate}")
+            println("==================================================================================")
         } else{
             println("================================================================")
-            println("Member with ID $memberId not found.")
+            println("❌ Member with ID $memberId not found.")
             println("================================================================")
         }
     }
@@ -191,33 +201,36 @@ class FitnessCenterManager {
         val startDate: LocalDate = try {
             LocalDate.parse(inputtedStartDate, DateTimeFormatter.ISO_LOCAL_DATE)
         } catch (e: Exception) {
-            throw IllegalArgumentException("Invalid date format. Please enter a date in the format yyyy-mm-dd.")
+            throw IllegalArgumentException("⚠️ Invalid date format. Please enter a date in the format yyyy-mm-dd.")
         }
 
         val endDate: LocalDate = try {
             LocalDate.parse(inputtedEndDate, DateTimeFormatter.ISO_LOCAL_DATE)
         } catch (e: Exception) {
-            throw IllegalArgumentException("Invalid date format. Please enter a date in the format yyyy-mm-dd.")
+            throw IllegalArgumentException("⚠️ Invalid date format. Please enter a date in the format yyyy-mm-dd.")
         }
 
         if (startDate.isAfter(endDate)) {
-            println("Start date cannot be after end date.")
+            println("❌ Start date cannot be after end date.")
             return
         }
 
         val classesInRange = fitnessClasses.filter { it.date.isAfter(startDate.minusDays(1)) && it.date.isBefore(endDate.plusDays(1)) }
         if (classesInRange.isEmpty()) {
-            println("No fitness classes scheduled between $inputtedStartDate and $inputtedEndDate.")
+            println("📅 No fitness classes scheduled between $inputtedStartDate and $inputtedEndDate.")
         } else {
-            println("Fitness Classes scheduled between $inputtedStartDate and $inputtedEndDate:")
+            println("📅 Fitness Classes scheduled between $inputtedStartDate and $inputtedEndDate:")
+            println("================================================================")
+
             for (fitnessClass in classesInRange) {
                 val availableSpots = fitnessClass.maxParticipants - fitnessClass.enrolledMembers.size
-                println("Class Name: ${fitnessClass.name}")
-                println("Instructor: ${fitnessClass.instructor}")
-                println("Date: ${fitnessClass.date}")
-                println("Time: ${fitnessClass.time}")
-                println("Duration: ${fitnessClass.duration} mins")
-                println("Available Spots: $availableSpots")
+                println("🏋️‍♂️ Class Name: ${fitnessClass.name}")
+                println("👨‍🏫 Instructor: ${fitnessClass.instructor}")
+                println("📅 Date: ${fitnessClass.date}")
+                println("⏰ Time: ${fitnessClass.time}")
+                println("⏳ Duration: ${fitnessClass.duration} mins")
+                println("👥 Available Spots: $availableSpots")
+                println("================================================================")
             }
         }
 
@@ -254,16 +267,18 @@ class FitnessCenterManager {
         if (member != null && fitnessClass != null) {
             if (!member.attendedClasses.contains(fitnessClass)) {
                 member.attendedClasses.add(fitnessClass)
-                println("================================================================")
-                println("Attendance marked for ${member.name} in class '${fitnessClass.name}'.")
-                println("================================================================")
+                println("=============================================================================")
+                println("✅ Attendance marked for '${member.name}' in class '${fitnessClass.name}'.")
+                println("=============================================================================")
             } else {
-                println("================================================================")
-                println("${member.name} has already attended this class.")
-                println("================================================================")
+                println("=============================================================================")
+                println("⚠️ ${member.name} has already attended the class '${fitnessClass.name}'.")
+                println("=============================================================================")
             }
         } else {
-            println("Invalid member ID or class ID.")
+            println("================================================================")
+            println("❌ Invalid member ID ($memberId) or class ID ($classId).")
+            println("================================================================")
         }
     }
 

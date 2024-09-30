@@ -2,14 +2,15 @@ import services.FitnessCenterManager
 import java.util.*
 
 fun showMenu(){
-    println("**Project Management System**")
+    println("\n🎉 **Project Management System** 🎉")
     println("1. Register Member")
     println("2. Schedule Fitness Classes")
     println("3. Enroll in Class")
     println("4. Class Attendance Tracking")
     println("5. Membership Renewal")
     println("6. List Classes by Date")
-    println(">> ")
+    println("7. Exit")
+    print("Please select an option: ")
 }
 
 
@@ -26,6 +27,7 @@ fun main() {
             scanner.nextLine()
             when (selectedMenu) {
                 1 -> {
+                    println("\n👤 **Register Member**")
                     println("Member Name: ")
                     val name: String = scanner.nextLine()
 
@@ -35,6 +37,7 @@ fun main() {
                     fcm.registerMember(name, membershipType)
                 }
                 2 -> {
+                    println("\n📅 **Schedule Fitness Classes**")
                     println("Class Name: ")
                     val name: String = scanner.nextLine()
 
@@ -61,6 +64,7 @@ fun main() {
                     fcm.scheduleFitnessClasses(name, instructor, date, time, duration, maxParticipants, classType)
                 }
                 3 -> {
+                    println("\n📋 **Enroll in Class**")
                     println("Member ID: ")
                     val memberId: Int = scanner.nextInt()
 
@@ -77,17 +81,20 @@ fun main() {
                     fcm.enrollInClass(memberId, fitnessClassId)
                 }
                 4 -> {
+                    println("\n📊 **Class Attendance Tracking**")
                     println("Member ID: ")
                     val memberId: Int = scanner.nextInt()
                     fcm.classAttendanceTracking(memberId)
                 }
                 5 -> {
+                    println("\n🔄 **Membership Renewal**")
                     println("Member ID: ")
                     val memberId: Int = scanner.nextInt()
                     scanner.nextLine()
                     fcm.membershipRenewal(memberId)
                 }
                 6 -> {
+                    println("\n📅 **List Classes by Date**")
                     println("Class Start Date[yyyy-MM-dd]: ")
                     val startDate: String = scanner.nextLine()
 
@@ -97,10 +104,10 @@ fun main() {
                     fcm.listClassesByDate(startDate, endDate)
                 }
                 7 -> {
-                    println("Exiting...")
+                    println("👋 Exiting...")
                 }
                 else -> {
-                    println("Invalid option. Please select a valid menu.")
+                    println("❌ Invalid option. Please select a valid menu.")
                 }
             }
         } catch (e: NumberFormatException) {
