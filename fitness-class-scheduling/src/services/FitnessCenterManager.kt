@@ -66,7 +66,6 @@ class FitnessCenterManager {
         } else {
             println("Class cannot be scheduled because it overlaps with an existing class.")
         }
-
     }
 
     fun enrollInClass(memberId:Int, fitnessClassId:List<Int>){
@@ -95,9 +94,14 @@ class FitnessCenterManager {
             when (accessLevel) {
                 MembershipType.Basic -> {
                     if (fitnessClassType == ClassType.Regular) {
-                        println("================================================================")
-                        println("Enrolled in regular class: $classId")
-                        println("================================================================")
+                        if (fitnessClass.enrolledMembers.size < fitnessClass.maxParticipants) {
+                            fitnessClass.enrolledMembers.add(member)
+                            println("================================================================")
+                            println("Enrolled in regular class: $classId")
+                            println("================================================================")
+                        } else {
+                            println("Cannot enroll in class $classId. This class is already full.")
+                        }
                     } else {
                         println("================================================================")
                         println("Cannot enroll in class $classId. Basic members can only access regular classes.")
@@ -106,9 +110,14 @@ class FitnessCenterManager {
                 }
                 MembershipType.Premium -> {
                     if (fitnessClassType == ClassType.Regular || fitnessClassType == ClassType.Special) {
-                        println("================================================================")
-                        println("Enrolled in class: $classId")
-                        println("================================================================")
+                        if (fitnessClass.enrolledMembers.size < fitnessClass.maxParticipants) {
+                            fitnessClass.enrolledMembers.add(member)
+                            println("================================================================")
+                            println("Enrolled in class: $classId")
+                            println("================================================================")
+                        } else {
+                            println("Cannot enroll in class $classId. This class is already full.")
+                        }
                     } else {
                         println("================================================================")
                         println("Cannot enroll in class $classId. Premium members can only access regular and special classes.")
@@ -116,9 +125,14 @@ class FitnessCenterManager {
                     }
                 }
                 MembershipType.VIP -> {
-                    println("================================================================")
-                    println("Enrolled in class: $classId")
-                    println("================================================================")
+                    if (fitnessClass.enrolledMembers.size < fitnessClass.maxParticipants) {
+                        fitnessClass.enrolledMembers.add(member)
+                        println("================================================================")
+                        println("Enrolled in class: $classId")
+                        println("================================================================")
+                    } else {
+                        println("Cannot enroll in class $classId. This class is already full.")
+                    }
                 }
                 else -> {
                     println("================================================================")
