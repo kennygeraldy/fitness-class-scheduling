@@ -22,6 +22,9 @@ fun main() {
     while (selectedMenu != 7) {
         menus()
         try {
+            for (x in fcm.members){
+                println("${x.name} ${x.membershipType} ${x.subscriptionEndDate}")
+            }
             selectedMenu = scanner.nextInt()
             scanner.nextLine()
             when (selectedMenu) {
@@ -47,7 +50,7 @@ fun main() {
                     println("Class Time[HH:mm:ss]: ")
                     val time:String = scanner.nextLine()
 
-                    println("Class Duration: ")
+                    println("Class Duration [0-60 minutes]: ")
                     val duration:Int = scanner.nextInt()
                     scanner.nextLine()
 
@@ -84,17 +87,17 @@ fun main() {
                 5 -> {
                     println("Member ID: ")
                     val memberId: Int = scanner.nextInt()
-                    fcm.classAttendanceTracking(memberId)
+                    scanner.nextLine()
                     fcm.membershipRenewal(memberId)
                 }
                 6 -> {
-                    println("Class Date: ")
-                    val date: String = scanner.nextLine()
+                    println("Class Start Date[yyyy-MM-dd]: ")
+                    val startDate: String = scanner.nextLine()
 
-                    println("Class Time: ")
-                    val time: String = scanner.nextLine()
+                    println("Class End Date[yyyy-MM-dd]: ")
+                    val endDate: String = scanner.nextLine()
 
-                    fcm.listClassesByDate(date, time)
+                    fcm.listClassesByDate(startDate, endDate)
                 }
                 7 -> {
                     println("Exiting...")
