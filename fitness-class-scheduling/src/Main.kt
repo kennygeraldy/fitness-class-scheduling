@@ -22,9 +22,6 @@ fun main() {
     while (selectedMenu != 7) {
         menus()
         try {
-            for (x in fcm.members){
-                println("${x.name} ${x.membershipType} ${x.subscriptionEndDate}")
-            }
             selectedMenu = scanner.nextInt()
             scanner.nextLine()
             when (selectedMenu) {
