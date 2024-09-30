@@ -6,8 +6,8 @@ import enum.ClassType
 import enum.MembershipType
 import java.time.LocalDate
 import java.time.LocalTime
-import java.time.Period
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 class FitnessCenterManager {
 
@@ -146,8 +146,15 @@ class FitnessCenterManager {
     fun classAttendanceTracking(memberId: Int){
         val member = members.find { it.id == memberId }
         if (member != null) {
-            for (x in member.attendedClasses){
-                println("ID: ${x.id} Name:${x.name} Instructor: ${x.instructor} Date: ${x.date} Time: ${x.time} Duration: ${x.duration} Enrroled Members: ${x.enrolledMembers.size} Max Participants: ${x.maxParticipants} Class Type: ${x.classType}")
+            println(member.name)
+            if (member.attendedClasses.isEmpty()) {
+                println("================================================================")
+                println("No classes attended by member ${member.name}.")
+                println("================================================================")
+            } else {
+                for (x in member.attendedClasses) {
+                    println("ID: ${x.id} Name:${x.name} Instructor: ${x.instructor} Date: ${x.date} Time: ${x.time} Duration: ${x.duration} Enrolled Members: ${x.enrolledMembers.size} Max Participants: ${x.maxParticipants} Class Type: ${x.classType}")
+                }
             }
         } else{
             println("================================================================")
@@ -160,7 +167,7 @@ class FitnessCenterManager {
         val member = members.find { it.id == memberId }
         if (member != null) {
             val today = LocalDate.now()
-            val daysRemaining = Period.between(today, member.subscriptionEndDate).days
+            val daysRemaining = ChronoUnit.DAYS.between(today, member.subscriptionEndDate)
 
             if (daysRemaining <= 5) {
                 println("================================================================")
