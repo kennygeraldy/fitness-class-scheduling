@@ -33,8 +33,8 @@ class FitnessCenterManager {
         if (!isClassOverlapping(date, time, duration)) {
             if (isValidClassType(inputtedClassType)) {
                 val classType = ClassType.valueOf(inputtedClassType)
-                val newFitnessClass = FitnessClass(fitnessClass.size+1, name, instructor, date, time, duration, maxParticipants, mutableListOf(), classType)
-                fitnessClass.add(newFitnessClass)
+                val newFitnessClass = FitnessClass(fitnessClasses.size+1, name, instructor, date, time, duration, maxParticipants, mutableListOf(), classType)
+                fitnessClasses.add(newFitnessClass)
                 println("==============================================================")
                 println("'${newFitnessClass.name}' Class  has been created with ID: ${newFitnessClass.id}.")
                 println("==============================================================")
@@ -59,7 +59,39 @@ class FitnessCenterManager {
 
     }
 
-    fun listClassesByDate(date:String, time:String){
+    fun listClassesByDate(inputtedStartDate: String, inputtedEndDate: String){
+        val startDate: LocalDate = try {
+            LocalDate.parse(inputtedStartDate, DateTimeFormatter.ISO_LOCAL_DATE)
+        } catch (e: Exception) {
+            throw IllegalArgumentException("Invalid date format. Please enter a date in the format yyyy-mm-dd.")
+        }
+
+        val endDate: LocalDate = try {
+            LocalDate.parse(inputtedEndDate, DateTimeFormatter.ISO_LOCAL_DATE)
+        } catch (e: Exception) {
+            throw IllegalArgumentException("Invalid date format. Please enter a date in the format yyyy-mm-dd.")
+        }
+
+        if (startDate.isAfter(endDate)) {
+            println("Start date cannot be after end date.")
+            return
+        }
+
+        val classesInRange = fitnessClasses.filter { it.date.isAfter(startDate.minusDays(1)) && it.date.isBefore(endDate.plusDays(1)) }
+        if (classesInRange.isEmpty()) {
+            println("No fitness classes scheduled between $inputtedStartDate and $inputtedEndDate.")
+        } else {
+            println("Fitness Classes scheduled between $inputtedStartDate and $inputtedEndDate:")
+            for (fitnessClass in classesInRange) {
+                val availableSpots = fitnessClass.maxParticipants - fitnessClass.enrolledMembers.size
+                println("Class Name: ${fitnessClass.name}")
+                println("Instructor: ${fitnessClass.instructor}")
+                println("Date: ${fitnessClass.date}")
+                println("Time: ${fitnessClass.time}")
+                println("Duration: ${fitnessClass.duration} mins")
+                println("Available Spots: $availableSpots")
+            }
+        }
 
     }
 
@@ -75,7 +107,7 @@ class FitnessCenterManager {
     fun isClassOverlapping(date: LocalDate, startTime: LocalTime, duration: Int): Boolean {
         val endTime = startTime.plusMinutes(duration.toLong())
 
-        for (existingClass in fitnessClass) {
+        for (existingClass in fitnessClasses) {
             if (existingClass.date == date) {
                 if ((startTime.isBefore(existingClass.time.plusMinutes(existingClass.duration.toLong())) && endTime.isAfter(existingClass.time)) ||
                     (existingClass.time.isBefore(endTime) && existingClass.time.plusMinutes(existingClass.duration.toLong()).isAfter(startTime))
