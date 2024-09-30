@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter
 
 class FitnessCenterManager {
 
-    val fitnessClass = mutableListOf<FitnessClass>()
+    val fitnessClasses = mutableListOf<FitnessClass>()
     val members = mutableListOf<Member>()
 
     fun registerMember(name:String, membershipType: String){
