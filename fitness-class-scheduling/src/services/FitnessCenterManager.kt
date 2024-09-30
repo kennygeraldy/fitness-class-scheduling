@@ -6,6 +6,7 @@ import enum.ClassType
 import enum.MembershipType
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.Period
 import java.time.format.DateTimeFormatter
 
 class FitnessCenterManager {
@@ -143,11 +144,40 @@ class FitnessCenterManager {
     }
 
     fun classAttendanceTracking(memberId: Int){
-        
+        val member = members.find { it.id == memberId }
+        if (member != null) {
+            for (x in member.attendedClasses){
+                println("ID: ${x.id} Name:${x.name} Instructor: ${x.instructor} Date: ${x.date} Time: ${x.time} Duration: ${x.duration} Enrroled Members: ${x.enrolledMembers.size} Max Participants: ${x.maxParticipants} Class Type: ${x.classType}")
+            }
+        } else{
+            println("================================================================")
+            println("Member with ID $memberId not found.")
+            println("================================================================")
+        }
     }
 
     fun membershipRenewal(memberId: Int){
+        val member = members.find { it.id == memberId }
+        if (member != null) {
+            val today = LocalDate.now()
+            val daysRemaining = Period.between(today, member.subscriptionEndDate).days
 
+            if (daysRemaining <= 5) {
+                println("================================================================")
+                println("Warning: Member ${member.name}'s subscription ends in $daysRemaining day(s).")
+                println("================================================================")
+            }
+
+            member.subscriptionEndDate = member.subscriptionEndDate.plusDays(30)
+            println("================================================================")
+            println("Member ${member.name}'s subscription has been extended by 30 days.")
+            println("New subscription end date: ${member.subscriptionEndDate}")
+            println("================================================================")
+        } else{
+            println("================================================================")
+            println("Member with ID $memberId not found.")
+            println("================================================================")
+        }
     }
 
     fun listClassesByDate(inputtedStartDate: String, inputtedEndDate: String){
