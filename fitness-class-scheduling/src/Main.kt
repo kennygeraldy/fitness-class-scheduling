@@ -41,20 +41,22 @@ fun main() {
                     println("Class Instructor: ")
                     val instructor: String = scanner.nextLine()
 
-                    println("Class Date: ")
+                    println("Class Date[yyyy-MM-dd]: ")
                     val date: String = scanner.nextLine()
 
-                    println("Class Date: ")
+                    println("Class Time[HH:mm:ss]: ")
                     val time:String = scanner.nextLine()
 
                     println("Class Duration: ")
                     val duration:Int = scanner.nextInt()
+                    scanner.nextLine()
 
                     println("Class Max Participants: ")
                     val maxParticipants:Int = scanner.nextInt()
+                    scanner.nextLine()
 
                     println("Class Type [ Regular | Special | Exclusive]: ")
-                    val classType:String = scanner.nextLine()
+                    val classType = scanner.nextLine()
 
                     fcm.scheduleFitnessClasses(name, instructor, date, time, duration, maxParticipants, classType)
                 }

@@ -19,9 +19,9 @@ class FitnessCenterManager {
             "premium" -> MembershipType.Premium
             "vip" -> MembershipType.VIP
             else -> {
-                println("================================================================")
+                println("===============================================================================================")
                 println("Please input a valid membership tiers [Basic, Premium, and VIP]")
-                println("================================================================")
+                println("===============================================================================================")
                 return
             }
         }
