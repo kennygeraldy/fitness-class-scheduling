@@ -1,7 +1,7 @@
 import services.FitnessCenterManager
 import java.util.*
 
-fun menus(){
+fun showMenu(){
     println("**Project Management System**")
     println("1. Register Member")
     println("2. Schedule Fitness Classes")
@@ -20,7 +20,7 @@ fun main() {
     var selectedMenu = 0
 
     while (selectedMenu != 7) {
-        menus()
+        showMenu()
         try {
             selectedMenu = scanner.nextInt()
             scanner.nextLine()
