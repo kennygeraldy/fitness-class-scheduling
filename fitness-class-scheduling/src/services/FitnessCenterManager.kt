@@ -137,11 +137,6 @@ class FitnessCenterManager {
                         println("Cannot enroll in class $classId. This class is already full.")
                     }
                 }
-                else -> {
-                    println("================================================================")
-                    println("Unknown membership type: $accessLevel")
-                    println("================================================================")
-                }
             }
         }
     }
