@@ -96,6 +96,7 @@ class FitnessCenterManager {
                     if (fitnessClassType == ClassType.Regular) {
                         if (fitnessClass.enrolledMembers.size < fitnessClass.maxParticipants) {
                             fitnessClass.enrolledMembers.add(member)
+                            markAttendance(memberId, classId)
                             println("================================================================")
                             println("Enrolled in regular class: $classId")
                             println("================================================================")
@@ -112,6 +113,7 @@ class FitnessCenterManager {
                     if (fitnessClassType == ClassType.Regular || fitnessClassType == ClassType.Special) {
                         if (fitnessClass.enrolledMembers.size < fitnessClass.maxParticipants) {
                             fitnessClass.enrolledMembers.add(member)
+                            markAttendance(memberId, classId)
                             println("================================================================")
                             println("Enrolled in class: $classId")
                             println("================================================================")
@@ -127,6 +129,7 @@ class FitnessCenterManager {
                 MembershipType.VIP -> {
                     if (fitnessClass.enrolledMembers.size < fitnessClass.maxParticipants) {
                         fitnessClass.enrolledMembers.add(member)
+                        markAttendance(memberId, classId)
                         println("================================================================")
                         println("Enrolled in class: $classId")
                         println("================================================================")
@@ -143,13 +146,22 @@ class FitnessCenterManager {
         }
     }
 
-    fun classAttendanceTracking(memberId: Int){
+    fun classAttendanceTracking(memberId: Int) {
         val member = members.find { it.id == memberId }
         if (member != null) {
-            for (x in member.attendedClasses){
-                println("ID: ${x.id} Name:${x.name} Instructor: ${x.instructor} Date: ${x.date} Time: ${x.time} Duration: ${x.duration} Enrroled Members: ${x.enrolledMembers.size} Max Participants: ${x.maxParticipants} Class Type: ${x.classType}")
+            if (member.attendedClasses.isNotEmpty()) {
+                println("================================================================")
+                println("Classes attended by ${member.name}:")
+                println("================================================================")
+                for (x in member.attendedClasses) {
+                    println("ID: ${x.id} Name: ${x.name} Instructor: ${x.instructor} Date: ${x.date} Time: ${x.time} Duration: ${x.duration} Enrolled Members: ${x.enrolledMembers.size} Max Participants: ${x.maxParticipants} Class Type: ${x.classType}")
+                }
+            } else {
+                println("================================================================")
+                println("${member.name} has not attended any classes.")
+                println("================================================================")
             }
-        } else{
+        } else {
             println("================================================================")
             println("Member with ID $memberId not found.")
             println("================================================================")
@@ -239,4 +251,25 @@ class FitnessCenterManager {
         }
         return false
     }
+
+    fun markAttendance(memberId: Int, classId: Int) {
+        val member = members.find { it.id == memberId }
+        val fitnessClass = fitnessClasses.find { it.id == classId }
+
+        if (member != null && fitnessClass != null) {
+            if (!member.attendedClasses.contains(fitnessClass)) {
+                member.attendedClasses.add(fitnessClass)
+                println("================================================================")
+                println("Attendance marked for ${member.name} in class '${fitnessClass.name}'.")
+                println("================================================================")
+            } else {
+                println("================================================================")
+                println("${member.name} has already attended this class.")
+                println("================================================================")
+            }
+        } else {
+            println("Invalid member ID or class ID.")
+        }
+    }
+
 }
