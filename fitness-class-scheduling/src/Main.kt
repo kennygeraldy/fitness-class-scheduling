@@ -17,6 +17,7 @@ fun showMenu(){
 fun main() {
 
     val fcm = FitnessCenterManager()
+    fcm.init()
     val scanner = Scanner(System.`in`)
     var selectedMenu = 0
 

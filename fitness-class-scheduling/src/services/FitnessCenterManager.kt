@@ -14,6 +14,11 @@ class FitnessCenterManager {
     val fitnessClasses = mutableListOf<FitnessClass>()
     val members = mutableListOf<Member>()
 
+    fun init(){
+        val mem = Member(1,"Kenny",MembershipType.VIP,LocalDate.now().minusDays(35),LocalDate.now().minusDays(5))
+        members.add(mem)
+    }
+
     fun registerMember(name:String, membershipType: String){
         val membershipType = when (membershipType.toLowerCase()) {
             "basic" -> MembershipType.Basic
