@@ -88,10 +88,18 @@ fun main() {
                 }
                 5 -> {
                     println("\n🔄 **Membership Renewal**")
-                    println("Member ID: ")
-                    val memberId: Int = scanner.nextInt()
-                    scanner.nextLine()
-                    fcm.membershipRenewal(memberId)
+                    println("Do you want to renew your membership? [Y|N] ")
+                    val renew: String = scanner.nextLine();
+                    if (renew == "Y") {
+                        println("Member ID: ")
+                        val memberId: Int = scanner.nextInt()
+                        scanner.nextLine()
+                        fcm.membershipRenewal(memberId)
+                    } else if (renew == "N") {
+                        println("❌ Successfully cancelled your membership")
+                    } else {
+                        println("❌ Please enter either Y or N")
+                    }
                 }
                 6 -> {
                     println("\n📅 **List Classes by Date**")
