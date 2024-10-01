@@ -179,17 +179,16 @@ class FitnessCenterManager {
             val today = LocalDate.now()
             val daysRemaining = ChronoUnit.DAYS.between(today, member.subscriptionEndDate)
 
-            if (daysRemaining <= 5) {
-                println("==================================================================================")
-                println("⚠️ Warning: Member '${member.name}' subscription ends in $daysRemaining day(s).")
-                println("==================================================================================")
-            }
-
-            member.subscriptionEndDate = member.subscriptionEndDate.plusDays(30)
-            println("==================================================================================")
+            println("=======================================================================================")
             println("✅ Subscription Extended: Member '${member.name}' has been extended by 30 days.")
+            if (daysRemaining >= 25){
+                member.subscriptionEndDate = member.subscriptionEndDate.plusDays(35)
+                println("✅ Subscription Bonus: Member '${member.name}' has been extended by extra 5 days.")
+            } else{
+                member.subscriptionEndDate = member.subscriptionEndDate.plusDays(30)
+            }
             println("📅 New subscription end date: ${member.subscriptionEndDate}")
-            println("==================================================================================")
+            println("=======================================================================================")
         } else{
             println("================================================================")
             println("❌ Member with ID $memberId not found.")
@@ -279,6 +278,20 @@ class FitnessCenterManager {
             println("================================================================")
             println("❌ Invalid member ID ($memberId) or class ID ($classId).")
             println("================================================================")
+        }
+    }
+
+    fun countDaysRemaining(memberId:Int){
+        val member = members.find { it.id == memberId }
+        if (member != null) {
+            val today = LocalDate.now()
+            val daysRemaining = ChronoUnit.DAYS.between(member.subscriptionEndDate, today)
+
+            if (daysRemaining in 0..5) {
+                println("==================================================================================")
+                println("⚠️ Warning: Member '${member.name}' subscription ends in $daysRemaining day(s).")
+                println("==================================================================================")
+            }
         }
     }
 
