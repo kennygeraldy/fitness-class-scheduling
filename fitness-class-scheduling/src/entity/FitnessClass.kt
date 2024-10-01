@@ -18,6 +18,7 @@ class FitnessClass(
     init {
         if (name.isBlank()) throw IllegalArgumentException("Name cannot be blank")
         if (instructor.isBlank()) throw IllegalArgumentException("Instructor cannot be blank")
+        require(date < LocalDate.now()) {"Date cannot be past the current date"}
         require(duration > 0 && duration <= 60) { "Duration must be between 1 and 60 minutes." }
         require(maxParticipants > 0) { "Max participants must be greater than 0." }
     }
