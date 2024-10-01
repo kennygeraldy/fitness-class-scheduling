@@ -118,9 +118,6 @@ fun main() {
                     println("❌ Invalid option. Please select a valid menu.")
                 }
             }
-        } catch (e: NumberFormatException) {
-            scanner.nextLine()
-            println("Error: Invalid number format. Please enter a valid integer.")
         } catch (e: Exception) {
             scanner.nextLine()
             println("Error: ${e.message}")
