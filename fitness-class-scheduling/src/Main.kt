@@ -96,7 +96,7 @@ fun main() {
                         scanner.nextLine()
                         fcm.membershipRenewal(memberId)
                     } else if (renew == "N") {
-                        println("❌ Successfully cancelled your membership")
+                        println("❌ Successfully cancelled your renewal")
                     } else {
                         println("❌ Please enter either Y or N")
                     }
